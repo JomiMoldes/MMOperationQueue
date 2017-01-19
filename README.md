@@ -2,7 +2,7 @@
 ## MMOperationQueue is a wrapper for OperationQueue. It takes care of asynchronous operations and offers a simpler api.
 
 ### Example
-```
+``` Swift
 let operationsQueue = MMOperationsQueue()
 
 let operation1 = MMAsynchronousExampleOperation()!
