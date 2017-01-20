@@ -30,7 +30,7 @@ class MMOperationsQueueTest : XCTestCase {
         let op6 = FakeSyncOperation(name:"testDependSync",cancel:false)!
         op6.dependencies = [op5]
 
-        let asyncExpectation = expectation(description: "operation 1 depends on operation 2")
+        let asyncExpectation = expectation(description: "operations depending")
         operationQueue.completionExpectation = asyncExpectation
 
         operationQueue.addOperations(operations: [op1, op2, op3, op4, op5, op6])
