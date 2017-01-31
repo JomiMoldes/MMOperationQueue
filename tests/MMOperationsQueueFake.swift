@@ -1,7 +1,7 @@
 import Foundation
 import XCTest
 
-@testable import VocabularyTrainer
+@testable import MMOperationsQueueWrapper
 
 class MMOperationsQueueFake : MMOperationsQueue {
 
@@ -13,6 +13,5 @@ class MMOperationsQueueFake : MMOperationsQueue {
         }
         super.addOperations(operations: operations)
     }
-
 
 }

@@ -7,12 +7,17 @@ class MMOperationsQueue : NSObject {
     var completionBlock: (() -> ())?
 
     func addOperations(operations: [MMOperationProtocol]) {
+        let completeOperation = BlockOperation{
+            self.operationsList.removeAll()
+            self.completionBlock?()
+        }
         var list = [Operation]()
         for operation in operations {
             addOperation(operation: operation)
+            completeOperation.addDependency(operation.operation)
             list.append(operation.operation)
         }
-        operationsQueue.addObserver(self, forKeyPath: "operations", options:[.new, .old], context: nil)
+        list.append(completeOperation)
         operationsQueue.addOperations(list, waitUntilFinished: false)
     }
 
@@ -50,13 +55,6 @@ class MMOperationsQueue : NSObject {
                             }
                         }
                         break
-                    case "operations":
-                        if (newValue as! [Operation]).count == 0 {
-                            self.operationsQueue.removeObserver(self, forKeyPath: "operations", context: nil)
-                            self.operationsList.removeAll()
-                            self.completionBlock?()
-                        }
-                    break
                     default:
                         break
                     }

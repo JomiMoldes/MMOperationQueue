@@ -1,7 +1,7 @@
 import Foundation
 import XCTest
 
-@testable import MMOperationsQueue
+@testable import MMOperationsQueueWrapper
 
 class MMOperationsQueueTest : XCTestCase {
 
