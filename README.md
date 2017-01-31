@@ -13,11 +13,11 @@ operation2.successDependencies = [operation1]
 let operation3 = MMSyncExampleOperation()!
 operation3.dependencies = [operation2]
 
-operationsQueue?.completionBlock = {
+operationsQueue.completionBlock = {
   self.operationsQueue = nil
 }
 
-operationsQueue?.addOperations(operations: [operation1, operation2, operation3])
+operationsQueue.addOperations(operations: [operation1, operation2, operation3])
 ```
 
 You can create an asynchronous or sync operation easily. You only need to conform to the protocol and take care that you call finishOperation(), and cancel() if needed:
