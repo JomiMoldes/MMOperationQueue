@@ -82,12 +82,17 @@ class MMAsynchronousOperation : Operation {
             self.state = .Finished
             return
         }
-        self.delegate?.execute()
+        do {
+            try self.delegate?.execute()
+        }catch {
+            print("error when trying to execute operation")
+            self.cancel()
+            self.finishOperation()
+        }
     }
 
     func finishOperation() {
         self.state = .Finished
     }
-
 
 }

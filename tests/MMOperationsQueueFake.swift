@@ -1,7 +1,12 @@
+//
+// Created by MIGUEL MOLDES on 31/1/17.
+// Copyright (c) 2017 MIGUEL MOLDES. All rights reserved.
+//
+
 import Foundation
 import XCTest
 
-@testable import VocabularyTrainer
+@testable import MMOperationsQueueWrapper
 
 class MMOperationsQueueFake : MMOperationsQueue {
 
@@ -13,6 +18,5 @@ class MMOperationsQueueFake : MMOperationsQueue {
         }
         super.addOperations(operations: operations)
     }
-
 
 }

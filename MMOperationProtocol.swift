@@ -8,6 +8,6 @@ import Foundation
 
     var successDependencies:[MMOperationProtocol] { get set }
 
-    func execute()
+    func execute() throws
 
 }

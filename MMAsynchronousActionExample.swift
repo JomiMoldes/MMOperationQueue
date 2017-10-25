@@ -1,18 +1,8 @@
 import Foundation
 
-class MMAsynchronousExampleOperation : MMOperationProtocol {
+class MMAsynchronousActionExample: MMAsynchronousAction {
 
-    var operation: Operation
-
-    var dependencies = [MMOperationProtocol]()
-    var successDependencies = [MMOperationProtocol]()
-
-    init?(){
-        self.operation = MMAsynchronousOperation()
-        (self.operation as! MMAsynchronousOperation).delegate = self
-    }
-
-    func execute() {
+    override func execute() throws {
         let url = URL(string:"http://api.ultralingua.com/api/definitions/de/en/laufen")!
         let task = URLSession.shared.dataTask(with: url) {
             (data, response, error) in
@@ -37,6 +27,5 @@ class MMAsynchronousExampleOperation : MMOperationProtocol {
 
         task.resume()
     }
-
 
 }

@@ -5,12 +5,12 @@
 ``` Swift
 let operationsQueue = MMOperationsQueue()
 
-let operation1 = MMAsynchronousExampleOperation()!
+let operation1 = MMAsynchronousActionExample()!
 
-let operation2 = MMAsynchronousExampleOperation()!
+let operation2 = MMAsynchronousActionExample()!
 operation2.successDependencies = [operation1]
 
-let operation3 = MMSyncExampleOperation()!
+let operation3 = MMSyncActionExample()!
 operation3.dependencies = [operation2]
 
 operationsQueue?.completionBlock = {
@@ -22,20 +22,29 @@ operationsQueue?.addOperations(operations: [operation1, operation2, operation3])
 
 You can create an asynchronous or sync operation easily. You only need to conform to the protocol and take care that you call finishOperation(), and cancel() if needed:
 ``` Swift
-class MMAsynchronousExampleOperation : MMOperationProtocol {
+
+class MMAsynchronousAction : MMOperationProtocol {
 
     var operation: Operation
 
     var dependencies = [MMOperationProtocol]()
     var successDependencies = [MMOperationProtocol]()
 
-    init?(){
+    init(){
         self.operation = MMAsynchronousOperation()
         (self.operation as! MMAsynchronousOperation).delegate = self
     }
 
-    func execute() {
-        let url = URL(string:"")!
+    func execute() throws {
+        throw MMError.notOverriden
+    }
+
+}
+
+class MMAsynchronousActionExample: MMAsynchronousAction {
+
+    override func execute() throws {
+        let url = URL(string:"http://api.ultralingua.com/api/definitions/de/en/laufen")!
         let task = URLSession.shared.dataTask(with: url) {
             (data, response, error) in
             guard error == nil else {
@@ -59,6 +68,7 @@ class MMAsynchronousExampleOperation : MMOperationProtocol {
 
         task.resume()
     }
+
 }
 
 ```

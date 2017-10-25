@@ -1,7 +1,7 @@
 import Foundation
 import XCTest
 
-@testable import MMOperationsQueue
+@testable import MMOperationsQueueWrapper
 
 class MMOperationsQueueTest : XCTestCase {
 
@@ -18,16 +18,16 @@ class MMOperationsQueueTest : XCTestCase {
     }
 
     func testDependencies() {
-        let op1 = FakeAsynchronousOperation(name:"testDependAsync",cancel:false)!
-        let op2 = FakeSyncOperation(name:"testDependSync",cancel:false)!
+        let op1 = FakeAsynchronousAction(name:"testDependAsync",cancel:false)
+        let op2 = FakeSyncAction(name:"testDependSync",cancel:false)
         op2.dependencies = [op1]
-        let op3 = FakeSyncOperation(name:"testDependSync",cancel:false)!
+        let op3 = FakeSyncAction(name:"testDependSync",cancel:false)
         op3.successDependencies = [op2]
-        let op4 = FakeSyncOperation(name:"testDependSync",cancel:true)!
+        let op4 = FakeSyncAction(name:"testDependSync",cancel:true)
         op4.successDependencies = [op3]
-        let op5 = FakeSyncOperation(name:"testDependSync",cancel:false)!
+        let op5 = FakeSyncAction(name:"testDependSync",cancel:false)
         op5.successDependencies = [op4]
-        let op6 = FakeSyncOperation(name:"testDependSync",cancel:false)!
+        let op6 = FakeSyncAction(name:"testDependSync",cancel:false)
         op6.dependencies = [op5]
 
         let asyncExpectation = expectation(description: "operations depending")
@@ -59,27 +59,22 @@ class MMOperationsQueueTest : XCTestCase {
 
 }
 
-class FakeAsynchronousOperation : MMOperationProtocol {
-
-    var operation: Operation
-    var dependencies = [MMOperationProtocol]()
-    var successDependencies = [MMOperationProtocol]()
+class FakeAsynchronousAction: MMAsynchronousAction {
 
     var cancel = false
     var done = false
-    let name:String!
+    let name:String
 
     var startTime:Date!
     var endTime:Date?
 
-    init?(name:String, cancel : Bool) {
+    init(name:String, cancel : Bool) {
         self.name = name
-        operation = MMAsynchronousOperation()
-        (operation as! MMAsynchronousOperation).delegate = self
         self.cancel = cancel
+        super.init()
     }
 
-    func execute() {
+    override func execute() throws {
         self.startTime = Date()
         if self.cancel || operation.isCancelled {
             self.endTime = Date()
@@ -90,36 +85,31 @@ class FakeAsynchronousOperation : MMOperationProtocol {
 
         let deadlineTime = DispatchTime.now() + .seconds(1)
         DispatchQueue.global(qos: .background).asyncAfter(deadline: deadlineTime) {
-                    self.done = true
-                    self.endTime = Date()
-                    (self.operation as! MMAsynchronousOperation).finishOperation()
-                }
+            self.done = true
+            self.endTime = Date()
+            (self.operation as! MMAsynchronousOperation).finishOperation()
+        }
     }
 
 }
 
-class FakeSyncOperation : MMOperationProtocol {
-
-    var operation: Operation
-    var dependencies = [MMOperationProtocol]()
-    var successDependencies = [MMOperationProtocol]()
+class FakeSyncAction: MMSynchronousAction {
 
     var cancel = false
     var done = false
 
-    let name:String!
+    let name:String
 
     var startTime:Date!
     var endTime:Date?
 
-    init?(name:String, cancel : Bool) {
+    init(name:String, cancel : Bool) {
         self.name = name
-        operation = MMSyncOperation()
-        (operation as! MMSyncOperation).delegate = self
         self.cancel = cancel
+        super.init()
     }
 
-    func execute() {
+    override func execute() throws {
         self.startTime = Date()
         self.endTime = Date()
         if self.cancel {
