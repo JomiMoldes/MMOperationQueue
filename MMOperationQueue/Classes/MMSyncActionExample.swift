@@ -2,7 +2,7 @@ import Foundation
 
 public class MMSyncActionExample: MMSynchronousAction {
 
-    override public func execute() throws {
+    override open func execute() throws {
         // execute your code here
     }
 }

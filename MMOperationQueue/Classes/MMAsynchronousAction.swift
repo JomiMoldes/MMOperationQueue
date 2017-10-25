@@ -17,8 +17,16 @@ open class MMAsynchronousAction : MMOperationProtocol {
         (self.operation as! MMAsynchronousOperation).delegate = self
     }
 
-    public func execute() throws {
+    open func execute() throws {
         throw MMError.notOverriden
+    }
+
+    public func finishOperation() {
+        (self.operation as! MMAsynchronousOperation).finishOperation()
+    }
+
+    public func cancelOperation() {
+        self.operation.cancel()
     }
 
 }

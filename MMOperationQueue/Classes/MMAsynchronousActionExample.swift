@@ -2,7 +2,7 @@ import Foundation
 
 public class MMAsynchronousActionExample: MMAsynchronousAction {
 
-    override public func execute() throws {
+    override open func execute() throws {
         let url = URL(string:"http://api.ultralingua.com/api/definitions/de/en/laufen")!
         let task = URLSession.shared.dataTask(with: url) {
             (data, response, error) in

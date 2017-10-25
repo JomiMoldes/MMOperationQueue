@@ -17,7 +17,7 @@ open class MMSynchronousAction : MMOperationProtocol {
         (self.operation as! MMSyncOperation).delegate = self
     }
 
-    public func execute() throws {
+    open func execute() throws {
         throw MMError.notOverriden
     }
 }
