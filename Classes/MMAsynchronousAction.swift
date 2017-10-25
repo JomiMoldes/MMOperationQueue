@@ -5,7 +5,7 @@
 
 import Foundation
 
-public class MMAsynchronousAction : MMOperationProtocol {
+open class MMAsynchronousAction : MMOperationProtocol {
 
     public var operation: Operation
 

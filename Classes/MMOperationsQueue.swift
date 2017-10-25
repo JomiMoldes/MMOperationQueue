@@ -4,7 +4,7 @@ enum MMError : Error {
     case notOverriden
 }
 
-public class MMOperationsQueue : NSObject {
+open class MMOperationsQueue : NSObject {
 
     private var operationsQueue = OperationQueue()
     private var operationsList = [MMOperationProtocol]()
@@ -40,7 +40,7 @@ public class MMOperationsQueue : NSObject {
         }
     }
 
-    override public func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+    override open func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if let newValue = change?[.newKey] as? NSObject {
             if let oldValue = change?[.oldKey] as? NSObject {
                 if !newValue.isEqual(oldValue as Any) {

@@ -5,7 +5,7 @@
 
 import Foundation
 
-public class MMSynchronousAction : MMOperationProtocol {
+open class MMSynchronousAction : MMOperationProtocol {
 
     public var operation: Operation
 
