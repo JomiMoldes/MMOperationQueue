@@ -5,19 +5,19 @@
 
 import Foundation
 
-class MMAsynchronousAction : MMOperationProtocol {
+public class MMAsynchronousAction : MMOperationProtocol {
 
-    var operation: Operation
+    public var operation: Operation
 
-    var dependencies = [MMOperationProtocol]()
-    var successDependencies = [MMOperationProtocol]()
+    public var dependencies = [MMOperationProtocol]()
+    public var successDependencies = [MMOperationProtocol]()
 
-    init(){
+    public init(){
         self.operation = MMAsynchronousOperation()
         (self.operation as! MMAsynchronousOperation).delegate = self
     }
 
-    func execute() throws {
+    public func execute() throws {
         throw MMError.notOverriden
     }
 

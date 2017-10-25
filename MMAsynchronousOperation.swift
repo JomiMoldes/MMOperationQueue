@@ -1,6 +1,6 @@
 import Foundation
 
-class MMAsynchronousOperation : Operation {
+public class MMAsynchronousOperation : Operation {
 
     weak var delegate:MMOperationProtocol?
 
@@ -41,19 +41,19 @@ class MMAsynchronousOperation : Operation {
         }
     }
 
-    override var isExecuting: Bool {
+    override public var isExecuting: Bool {
         return state == State.Executing
     }
 
-    override var isFinished: Bool {
+    override public var isFinished: Bool {
         return state == State.Finished
     }
 
-    override var isAsynchronous: Bool {
+    override public var isAsynchronous: Bool {
         return true
     }
 
-    override func start() {
+    override public func start() {
         guard Thread.isMainThread == false else {
             fatalError("you cannot call start from the main thread")
         }
@@ -67,7 +67,7 @@ class MMAsynchronousOperation : Operation {
         self.main()
     }
 
-    override func main() {
+    override public func main() {
         guard self.isCancelled == false else {
             self.state = .Finished
             return

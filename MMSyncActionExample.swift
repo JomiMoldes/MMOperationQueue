@@ -1,8 +1,8 @@
 import Foundation
 
-class MMSyncActionExample: MMSynchronousAction {
+public class MMSyncActionExample: MMSynchronousAction {
 
-    override func execute() throws {
+    override public func execute() throws {
         // execute your code here
     }
 }
