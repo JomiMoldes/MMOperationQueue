@@ -5,16 +5,16 @@
 ``` Swift
 let operationsQueue = MMOperationsQueue()
 
-let operation1 = MMAsynchronousActionExample()!
+let operation1 = MMAsynchronousActionExample()
 
-let operation2 = MMAsynchronousActionExample()!
+let operation2 = MMAsynchronousActionExample()
 operation2.successDependencies = [operation1]
 
-let operation3 = MMSyncActionExample()!
+let operation3 = MMSyncActionExample()
 operation3.dependencies = [operation2]
 
 operationsQueue.completionBlock = {
-  self.operationsQueue = nil
+	print("operations done")
 }
 
 operationsQueue.addOperations(operations: [operation1, operation2, operation3])
