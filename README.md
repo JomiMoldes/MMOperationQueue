@@ -23,25 +23,7 @@ operationsQueue.addOperations(operations: [operation1, operation2, operation3])
 You can create an asynchronous or sync operation easily. You only need to conform to the protocol and take care that you call finishOperation(), and cancel() if needed:
 ``` Swift
 
-class MMAsynchronousAction : MMOperationProtocol {
-
-    var operation: Operation
-
-    var dependencies = [MMOperationProtocol]()
-    var successDependencies = [MMOperationProtocol]()
-
-    init(){
-        self.operation = MMAsynchronousOperation()
-        (self.operation as! MMAsynchronousOperation).delegate = self
-    }
-
-    func execute() throws {
-        throw MMError.notOverriden
-    }
-
-}
-
-class MMAsynchronousActionExample: MMAsynchronousAction {
+class AsynchronousActionExample: MMAsynchronousAction {
 
     override func execute() throws {
         let url = URL(string:"http://api.ultralingua.com/api/definitions/de/en/laufen")!
@@ -49,24 +31,33 @@ class MMAsynchronousActionExample: MMAsynchronousAction {
             (data, response, error) in
             guard error == nil else {
                 print("error")
-                self.operation.cancel()
-                (self.operation as! MMAsynchronousOperation).finishOperation()
+                self.cancelOperation()
+                self.finishOperation()
                 return
             }
 
             guard let data = data else {
                 print("no data")
-                self.operation.cancel()
-                (self.operation as! MMAsynchronousOperation).finishOperation()
+                self.cancelOperation()
+                self.finishOperation()
                 return
             }
 
             _ = try? JSONSerialization.jsonObject(with: data, options:[])
 
-            (self.operation as! MMAsynchronousOperation).finishOperation()
+            self.finishOperation()
         }
 
         task.resume()
+    }
+
+}
+
+class SynchronousActionExample: MMSynchronousAction {
+
+    override func execute() throws {
+        // do stuff
+        // no need to finish operation
     }
 
 }
