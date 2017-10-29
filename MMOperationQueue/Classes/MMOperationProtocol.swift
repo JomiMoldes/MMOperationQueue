@@ -1,6 +1,6 @@
 import Foundation
 
-@objc protocol MMOperationProtocol {
+@objc public protocol MMOperationProtocol {
 
     var operation:Operation { get set }
 

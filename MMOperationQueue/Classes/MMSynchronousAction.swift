@@ -5,19 +5,19 @@
 
 import Foundation
 
-class MMSynchronousAction : MMOperationProtocol {
+open class MMSynchronousAction : MMOperationProtocol {
 
-    var operation: Operation
+    public var operation: Operation
 
-    var dependencies = [MMOperationProtocol]()
-    var successDependencies = [MMOperationProtocol]()
+    public var dependencies = [MMOperationProtocol]()
+    public var successDependencies = [MMOperationProtocol]()
 
-    init(){
+    public init(){
         self.operation = MMSyncOperation()
         (self.operation as! MMSyncOperation).delegate = self
     }
 
-    func execute() throws {
+    open func execute() throws {
         throw MMError.notOverriden
     }
 }

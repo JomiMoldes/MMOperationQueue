@@ -1,10 +1,10 @@
 import Foundation
 
-class MMSyncOperation : Operation {
+public class MMSyncOperation : Operation {
 
     weak var delegate:MMOperationProtocol?
 
-    override func main() {
+    override public func main() {
         do {
             try self.delegate?.execute()
         }catch {

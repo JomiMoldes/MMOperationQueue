@@ -1,8 +1,8 @@
 import Foundation
 
-class MMAsynchronousActionExample: MMAsynchronousAction {
+public class MMAsynchronousActionExample: MMAsynchronousAction {
 
-    override func execute() throws {
+    override open func execute() throws {
         let url = URL(string:"http://api.ultralingua.com/api/definitions/de/en/laufen")!
         let task = URLSession.shared.dataTask(with: url) {
             (data, response, error) in
