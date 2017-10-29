@@ -20,7 +20,7 @@ operationsQueue.completionBlock = {
 operationsQueue.addOperations(operations: [operation1, operation2, operation3])
 ```
 
-You can create an asynchronous or sync operation easily. You only need to conform to the protocol and take care that you call finishOperation(), and cancel() if needed:
+You can create an asynchronous or sync operation easily. You only need to inherit from MMAsynchronousAction or MMSynchronousAction and take care that you call finishOperation() and/or cancel() if needed:
 ``` Swift
 
 class AsynchronousActionExample: MMAsynchronousAction {
